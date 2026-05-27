@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>StudentScholarships.org — Find Your Scholarship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+
+<style>
+:root{
+  --navy:#1b2d4f;--navy-deep:#0d1b2e;--gold:#b8923a;--gold-lt:#d4a94e;
+  --gold-pale:#f7edd8;--cream:#faf7f2;--off:#f2ede4;--white:#fff;
+  --slate:#3d4f68;--slate-lt:#6b7d95;--border:#ddd5c4;--red:#b91c1c;
+  --ff-serif:'Playfair Display',Georgia,serif;
+  --ff-sans:'DM Sans',system-ui,sans-serif;
+  --pad:clamp(52px,6.5vw,88px);--wrap:1200px;--r:4px;
+  --sh1:0 1px 4px rgba(13,27,46,.06),0 4px 16px rgba(13,27,46,.08);
+  --sh2:0 4px 20px rgba(13,27,46,.10),0 12px 40px rgba(13,27,46,.14);
+  --sh3:0 8px 32px rgba(13,27,46,.14),0 24px 64px rgba(13,27,46,.20);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-sans);background:var(--cream);color:var(--navy-deep);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+button{cursor:pointer;border:none;background:none;font:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px,3.5vw,48px)}
+
+/* ── TYPOGRAPHY HELPERS ── */
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.eyebrow::before{content:'';width:24px;height:1.5px;background:var(--gold);display:block;flex-shrink:0}
+.sec-h{font-family:var(--ff-serif);font-size:clamp(24px,3.4vw,40px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:18px}
+.sec-h.light{color:var(--white)}
+.txt-link{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);border-bottom:1.5px solid var(--gold);padding-bottom:2px;transition:color .18s;white-space:nowrap}
+.txt-link:hover{color:var(--gold)}
+.txt-link.light{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.4)}
+.txt-link.light:hover{color:#fff}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:none}
+
+/* ════════════════════════════════
+   HEADER  (slim: 58 px)
+════════════════════════════════ */
+#hdr{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(13,27,46,.06);transition:box-shadow .3s}
+#hdr.scrolled{box-shadow:0 3px 20px rgba(13,27,46,.13)}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+
+/* logo */
+.logo{display:flex;flex-direction:column;flex-shrink:0;line-height:1.15;text-decoration:none}
+.logo-name{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.2px}
+.logo-name span{color:var(--gold)}
+.logo-sub{font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-lt)}
+
+/* nav links */
+.hdr-nav{display:flex;align-items:center;flex:1;justify-content:center;gap:1px}
+.hdr-nav a{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);padding:5px 10px;border-radius:3px;white-space:nowrap;transition:color .15s,background .15s}
+.hdr-nav a:hover,.hdr-nav a.on{color:var(--navy);background:var(--gold-pale)}
+
+/* search */
+.hdr-srch{display:flex;align-items:center;flex-shrink:0}
+.hdr-srch-box{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--cream);transition:border-color .2s}
+.hdr-srch-box:focus-within{border-color:var(--navy)}
+.hdr-srch-box input{padding:6px 12px;font-family:var(--ff-sans);font-size:12px;background:transparent;border:none;outline:none;color:var(--navy-deep);width:148px}
+.hdr-srch-box button{padding:6px 13px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:background .18s;display:flex;align-items:center;gap:5px}
+.hdr-srch-box button:hover{background:var(--gold)}
+
+/* burger */
+.burger{display:none;flex-direction:column;gap:4px;padding:5px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:1px;transition:.3s}
+
+/* ════════════════════════════════
+   DRAWER
+════════════════════════════════ */
+.drw-bg{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
+.drw-bg.open{display:block}
+.drw{position:absolute;right:0;top:0;bottom:0;width:280px;background:#fff;display:flex;flex-direction:column;animation:slideR .22s ease;overflow-y:auto}
+@keyframes slideR{from{transform:translateX(100%)}to{transform:none}}
+.drw-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drw-close{font-size:20px;color:var(--slate);cursor:pointer;padding:3px}
+.drw-nav a{display:block;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);padding:13px 20px;border-bottom:1px solid var(--off);transition:background .15s}
+.drw-nav a:hover{background:var(--gold-pale)}
+.drw-foot{padding:18px 20px;border-top:1px solid var(--border);margin-top:auto}
+.drw-foot input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--ff-sans);font-size:13px;background:var(--cream);outline:none}
+
+/*HERO*/
+.hero{
+   position:relative;
+   min-height:clamp(480px,64vh,680px);
+   display:flex;
+   align-items:center;
+   overflow:hidden;
+   justify-content:flex-start;
+   text-align:left;
+}
+.hero-bg{
+   position:absolute;
+   inset:0;
+   width:100%;
+   height:100%;
+   object-fit:cover;
+   object-position:center 38%;
+   animation:hZoom 9s ease forwards
+}
+@keyframes hZoom{
+   from{transform:scale(1.07)}to{transform:scale(1)}
+}
+.hero-veil{
+   position:absolute;
+   inset:0;
+   background:linear-gradient(110deg,rgba(10,20,42,.9) 0%,rgba(10,20,42,.62) 50%,rgba(10,20,42,.28) 100%),linear-gradient(to top,rgba(10,20,42,.55) 0%,transparent 45%)
+}
+
+.hero-content{
+   position:relative;
+   z-index:1;
+   max-width:630px;
+   padding-block:72px 90px;
+   animation:fUp .8s .08s ease both;
+   margin-left:0;
+   padding-left:0;
+}
+@keyframes fUp{
+   from{opacity:0;
+      transform:translateY(28px)}to{opacity:1;
+      transform:none}
+   }
+.hero-ey{
+   display:inline-flex;
+   align-items:center;
+   gap:9px;
+   font-size:10px;
+   font-weight:700;
+   letter-spacing:.22em;
+   text-transform:uppercase;
+   color:var(--gold-lt);
+   margin-bottom:18px
+}
+.hero-ey::before{
+   content:'';
+   width:24px;
+   height:1.5px;
+   background:var(--gold-lt);
+   display:block;
+   flex-shrink:0
+}
+.hero h1{
+   font-family:var(--ff-serif);
+   font-size:clamp(34px,5.2vw,60px);
+   font-weight:700;
+   color:#fff;
+   line-height:1.1;
+   letter-spacing:-.5px;
+   margin-bottom:18px
+}
+.hero h1 em{
+   font-style:italic;
+   color:var(--gold-lt)
+}
+.hero-sub{
+   font-size:clamp(14px,1.5vw,16.5px);
+   color:rgba(255,255,255,.76);
+   line-height:1.75;
+   font-weight:300;
+   max-width:500px;
+   margin-bottom:32px
+}
+
+/* HERO BUTTON WRAP */
+.hero-btn-wrap{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:nowrap;
+    margin-top:35px;
+}
+
+/* BUTTON STYLE */
+.hero-btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding:18px 34px;
+    border-radius:14px;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    overflow:hidden;
+    transition:all .35s ease;
+    z-index:1;
+    min-width:230px;
+    backdrop-filter:blur(10px);
+}
+
+/* ICON */
+.hero-btn i{
+    font-size:18px;
+}
+
+/* PRIMARY */
+.primary-btn{
+    background:linear-gradient(135deg,#00c853,#009624);
+    color:#fff;
+    box-shadow:0 10px 25px rgba(0,200,83,0.25);
+    text-align:center;
+    margin-top: 150px;
+}
+
+/* SECONDARY */
+.secondary-btn{
+    background:linear-gradient(135deg,#2962ff,#0039cb);
+    color:#fff;
+    box-shadow:0 10px 25px rgba(41,98,255,0.25);
+    text-align:center;
+    margin-top: 150px;
+}
+
+/* OUTLINE */
+.outline-btn{
+    border:2px solid tomato; /*rgba(255,255,255,0.2)*/;
+    background:rgba(255,255,255,0.08);
+    text-align:center;
+    color:#fff;
+    margin-top: 150px;
+}
+
+/* HOVER EFFECT */
+.hero-btn::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,0.15);
+    transform:translateX(-100%);
+    transition:0.5s;
+    z-index:-1;
+}
+
+.hero-btn:hover::before{
+    transform:translateX(0);
+}
+
+.hero-btn:hover{
+    transform:translateY(-5px);
+}
+
+
+
+/* RESPONSIVE */
+@media(max-width:991px){
+
+    .hero-btn-wrap{
+        flex-direction:column;
+        align-items:stretch;
+        flex-wrap:wrap;
+    }
+
+    .hero-btn{
+        width:100%;
+        min-width:100%;
+    }
+
+}
+
+/* hero search */
+/*.hero-srch{display:flex;background:#fff;border-radius:5px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.28);max-width:520px;margin-bottom:30px}
+.hero-srch input{flex:1;min-width:0;padding:14px 18px;font-family:var(--ff-sans);font-size:14px;border:none;outline:none;background:transparent;color:var(--navy-deep)}
+.hero-srch input::placeholder{color:var(--slate-lt)}
+.hero-srch button{padding:0 24px;background:var(--gold);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:background .18s;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.hero-srch button:hover{background:var(--navy)}*/
+
+/* hero pills */
+/*.hero-pills{display:flex;gap:22px;flex-wrap:wrap}
+.h-pill{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .18s}
+.h-pill svg{width:13px;height:13px;opacity:.7;flex-shrink:0}
+.h-pill:hover{color:#fff}*/
+
+/* hero stat badges */
+/*.hero-stats{position:absolute;right:clamp(18px,5vw,72px);bottom:clamp(28px,4vw,52px);z-index:2;display:flex;gap:12px;animation:fUp .9s .35s ease both}
+.hstat{background:rgba(255,255,255,.09);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);border-radius:5px;padding:14px 20px;text-align:center;color:#fff;min-width:100px}
+.hstat-n{font-family:var(--ff-serif);font-size:26px;font-weight:700;color:var(--gold-lt);display:block;line-height:1;margin-bottom:4px}
+.hstat-l{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.72}*/
+
+/* ════════════════════════════════
+   CONTENTS / QUICK LINKS (below hero)
+════════════════════════════════ */
+
+/* ════════════════════════════════
+   ACTION STRIP
+════════════════════════════════ */
+/*.strip{background:var(--navy);border-top:3px solid var(--gold)}
+.strip-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.s-item{display:flex;align-items:center;gap:16px;padding:24px 28px;border-right:1px solid rgba(255,255,255,.07);cursor:pointer;transition:background .18s;text-decoration:none}
+.s-item:last-child{border-right:none}
+.s-item:hover{background:rgba(255,255,255,.05)}
+.s-icon{width:42px;height:42px;border-radius:50%;background:rgba(184,146,58,.14);border:1.5px solid rgba(212,169,78,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.s-icon svg{width:18px;height:18px;stroke:var(--gold-lt);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.s-title{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:2px}
+.s-desc{font-size:12px;color:rgba(255,255,255,.52);font-weight:300}*/
+
+
+/*Sidebar (below hero)*/
+* {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:var(--ff-serif);
+            font-size:clamp(24px,3.4vw,40px);
+            font-weight:700;
+            color:var(--navy);
+            line-height:1.15;
+            margin-bottom:18px;
+            background-color: #ffffff;
+            color: #4a4a4a;
+            padding: 40px;
+        }
+
+        /* Container Layout */
+        .container {
+            display: flex;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Left Sidebar Styles */
+        .sidebar {
+            width: 220px;
+            padding-right: 30px;
+            border-right: 1px solid #e5e5e5; /* Light grey vertical divider */
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+         font-family:var(--ff-serif);font-size:clamp(24px,3.4vw,40px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:18px;
+            /*font-family: Georgia, "Times New Roman", serif;
+            font-size: 16px;
+            color: #1f2d3d;
+            text-transform: uppercase;
+            margin-bottom: 25px;*/
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 18px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #3b495e;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar a:hover {
+            color: #1f2d3d;
+            text-decoration: underline;
+        }
+
+        .sidebar .arrow {
+            margin-right: 8px;
+            font-size: 16px;
+            color: #3b495e;
+        }
+
+        /* Right Content Styles */
+        .main-content {
+            padding-left: 30px;
+            flex-grow: 1;
+        }
+
+        .main-content h1 {
+            font-family:var(--ff-serif);
+            font-size:clamp(24px,3.4vw,40px);
+            font-weight:700;
+            color:var(--navy);
+            line-height:1.15;
+            margin-bottom:18px
+
+            /*Georgia, "Times New Roman", serif*/;
+            /*font-size: 40px;
+            color: #1f2d3d;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;*/
+        }
+
+        .main-content p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555555;
+        }
+
+        /* Bottom Action Links */
+        .footer-links {
+            margin-top: 35px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links .divider {
+            color: #cccccc;
+            margin: 0 15px;
+            font-weight: 400;
+        }
+
+        /* Responsive behavior for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+                padding-right: 0;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+            .main-content {
+                padding-left: 0;
+            }
+        }
+
+.contents-band{background:var(--white);border-bottom:1px solid var(--border);padding:0}
+.contents-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.c-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 16px;text-align:center;cursor:pointer;border-right:1px solid var(--border);transition:background .18s;text-decoration:none;color:inherit}
+.c-item:last-child{border-right:none}
+.c-item:hover{background:var(--gold-pale)}
+.c-item:hover .c-icon{background:var(--navy);border-color:var(--navy)}
+.c-item:hover .c-icon svg{stroke:#fff}
+.c-icon{width:48px;height:48px;border-radius:50%;background:var(--gold-pale);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;flex-shrink:0}
+.c-icon svg{width:22px;height:22px;stroke:var(--gold);transition:stroke .18s;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.c-label{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);line-height:1.3}
+
+/*Side Bar*/
+
+/* ════════════════════════════════
+   ABOUT
+════════════════════════════════ */
+.about{
+   padding:var(--pad) 0;
+   background:var(--white)
+}
+.about-grid{
+   display:grid;
+   grid-template-columns:1fr 1fr;
+   gap:64px;align-items:center
+}
+.mosaic{
+   position:relative;
+   height:460px
+}
+.mosaic-main{
+   position:absolute;
+   top:0;
+   left:0;
+   width:70%;
+   height:86%;
+   object-fit:cover;
+   border-radius:4px;
+   box-shadow:var(--sh3)
+}
+.mosaic-acc{position:absolute;right:0;bottom:0;width:48%;height:52%;object-fit:cover;border-radius:4px;border:4px solid #fff;box-shadow:var(--sh2)}
+.mosaic-tag{position:absolute;bottom:54%;right:2%;background:var(--gold);color:#fff;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 13px;border-radius:2px;white-space:nowrap;z-index:2}
+.about-body p{font-size:15px;color:var(--slate);line-height:1.82;font-weight:300;margin-bottom:16px}
+.about-stats{display:flex;gap:32px;padding:24px 0;border-top:1px solid var(--off);border-bottom:1px solid var(--off);margin:28px 0;flex-wrap:wrap}
+.astat-n{font-family:var(--ff-serif);font-size:30px;font-weight:700;color:var(--navy);display:block;line-height:1}
+.astat-l{font-size:10.5px;font-weight:500;color:var(--slate-lt);letter-spacing:.04em;margin-top:4px;display:block}
+.about-links{display:flex;gap:24px;flex-wrap:wrap}
+
+/* ════════════════════════════════
+   FEATURED SCHOLARSHIPS
+════════════════════════════════ */
+.featured{padding:var(--pad) 0;background:var(--cream)}
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:40px;flex-wrap:wrap}
+.card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+
+.scard{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh1);transition:box-shadow .26s,transform .26s}
+.scard:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+.scard-img-wrap{position:relative;height:200px;overflow:hidden}
+.scard-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.scard:hover .scard-img{transform:scale(1.05)}
+.scard-cat{position:absolute;top:12px;left:12px;background:var(--navy);color:#fff;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.scard-body{padding:22px 24px 24px;flex:1;display:flex;flex-direction:column}
+.scard-title{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:10px}
+.scard-meta{display:flex;gap:18px;margin-bottom:7px;flex-wrap:wrap}
+.scard-meta span{font-size:11.5px;font-weight:500;color:var(--slate-lt)}
+.scard-meta strong{color:var(--navy);font-weight:700}
+.scard-dl{font-size:11px;font-weight:700;color:var(--red);margin-bottom:13px;display:flex;align-items:center;gap:4px}
+.scard-desc{font-size:13.5px;color:var(--slate);line-height:1.7;font-weight:300;flex:1;margin-bottom:20px}
+.scard-btn{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--navy);padding:10px 20px;border-radius:var(--r);align-self:flex-start;transition:background .18s}
+.scard-btn:hover{background:var(--gold)}
+.scard-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ════════════════════════════════
+   WINNERS
+════════════════════════════════ */
+.winners{position:relative;padding:var(--pad) 0;overflow:hidden}
+.winners-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.winners-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,22,48,.93),rgba(11,22,48,.89))}
+.winners>.wrap{position:relative;z-index:1}
+.winners .eyebrow{color:var(--gold-lt)}.winners .eyebrow::before{background:var(--gold-lt)}
+.w-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:20px}
+.wcard{text-align:center}
+.wcard-ring{position:relative;width:100%;padding-bottom:100%;border-radius:50%;overflow:hidden;border:3px solid rgba(212,169,78,.35);margin-bottom:12px;transition:border-color .22s;box-shadow:0 4px 18px rgba(0,0,0,.32)}
+.wcard:hover .wcard-ring{border-color:var(--gold-lt)}
+.wcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .4s ease}
+.wcard:hover .wcard-img{transform:scale(1.08)}
+.wcard-name{font-family:var(--ff-serif);font-size:12.5px;font-weight:600;color:#fff;line-height:1.2;margin-bottom:2px}
+.wcard-sch{font-size:10.5px;color:rgba(255,255,255,.48);font-style:italic;margin-bottom:2px}
+.wcard-yr{font-size:9.5px;font-weight:700;letter-spacing:.1em;color:var(--gold-lt)}
+
+/* ════════════════════════════════
+   MANAGED SCHOLARSHIPS
+════════════════════════════════ */
+.managed{padding:var(--pad) 0;background:#fff}
+.m-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.mcard{display:flex;border:1px solid var(--border);border-radius:var(--r);background:var(--cream);overflow:hidden;box-shadow:var(--sh1);transition:box-shadow .24s,transform .24s}
+.mcard:hover{box-shadow:var(--sh2);transform:translateY(-3px)}
+.mcard-img-wrap{width:130px;flex-shrink:0;overflow:hidden}
+.mcard-img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.mcard:hover .mcard-img{transform:scale(1.07)}
+.mcard-body{padding:18px 20px;display:flex;flex-direction:column;min-height:170px}
+.mcard-title{font-family:var(--ff-serif);font-size:15px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:7px}
+.mcard-meta{display:flex;gap:14px;font-size:11px;font-weight:500;color:var(--slate-lt);margin-bottom:4px;flex-wrap:wrap}
+.mcard-meta strong{color:var(--navy);font-weight:700}
+.mcard-dl{font-size:10.5px;font-weight:700;color:var(--red);margin-bottom:9px}
+.mcard-desc{font-size:13px;color:var(--slate);line-height:1.66;font-weight:300;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.mcard-btn{margin-top:12px;display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--navy);padding:7px 14px;border-radius:var(--r);align-self:flex-start;transition:background .18s;text-decoration:none}
+.mcard-btn:hover{background:var(--gold)}
+
+/* ════════════════════════════════
+   NEWSLETTER
+════════════════════════════════ */
+.nl{position:relative;padding:var(--pad) 0;overflow:hidden}
+.nl-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%}
+.nl-veil{position:absolute;inset:0;background:linear-gradient(to right,rgba(250,247,242,.97) 0%,rgba(250,247,242,.97) 52%,rgba(250,247,242,.72) 100%)}
+.nl-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.nl-body p{font-size:15px;color:var(--slate);font-weight:300;line-height:1.8;margin-bottom:26px;max-width:400px}
+.nl-form{display:flex;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--sh1);max-width:440px}
+.nl-form input{flex:1;min-width:0;padding:13px 16px;font-family:var(--ff-sans);font-size:13.5px;border:none;outline:none;background:transparent;color:var(--navy-deep)}
+.nl-form input::placeholder{color:var(--slate-lt)}
+.nl-form button{padding:0 22px;background:var(--gold);color:#fff;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;transition:background .18s;flex-shrink:0}
+.nl-form button:hover{background:var(--navy)}
+.nl-note{font-size:11.5px;color:var(--slate-lt);font-weight:300;margin-top:10px}
+.nl-img{width:100%;height:360px;object-fit:cover;border-radius:4px;box-shadow:var(--sh3)}
+
+/* ════════════════════════════════
+   FOOTER
+════════════════════════════════ */
+footer{background:var(--navy-deep);padding:56px 0 24px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.ft-brand .logo-name{color:#fff;font-size:18px}.ft-brand .logo-name span{color:var(--gold)}.ft-brand .logo-sub{color:rgba(255,255,255,.32)}
+.ft-brand p{margin-top:14px;font-size:13px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.75}
+.ft-col-t{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.42);font-weight:300;transition:color .18s}
+.ft-links a:hover{color:#fff}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:11px;color:rgba(255,255,255,.25);flex-wrap:wrap;gap:8px}
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+/* tablet ≤ 940px */
+@media(max-width:940px){
+  .hdr-nav,.hdr-srch{display:none}
+  .burger{display:flex}
+  .hero-stats{display:none}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .mosaic{height:340px}.mosaic-main{width:74%;height:84%}.mosaic-acc{width:46%;height:50%}
+  .card-grid{grid-template-columns:1fr}
+  .w-grid{grid-template-columns:repeat(4,1fr)}
+  .m-grid{grid-template-columns:1fr}
+  .nl-inner{grid-template-columns:1fr;gap:36px}.nl-img{height:240px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .contents-grid{grid-template-columns:repeat(3,1fr)}
+  .c-item:nth-child(3){border-right:none}
+  .c-item:nth-child(4),.c-item:nth-child(5){border-top:1px solid var(--border)}
+}
+/* mobile ≤ 580px */
+@media(max-width:580px){
+  .hero-content{padding-block:52px 70px}
+  .hero-srch{max-width:100%}
+  .hero-pills{gap:14px}
+  .strip-grid{grid-template-columns:1fr}
+  .s-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
+  .s-item:last-child{border-bottom:none}
+  .contents-grid{grid-template-columns:1fr 1fr}
+  .c-item:nth-child(2),.c-item:nth-child(4){border-right:none}
+  .c-item:nth-child(3){border-right:1px solid var(--border);border-top:1px solid var(--border)}
+  .c-item:nth-child(4),.c-item:nth-child(5){border-top:1px solid var(--border)}
+  .c-item:nth-child(5){grid-column:span 2}
+  .mosaic{height:280px}.mosaic-acc{display:none}
+  .w-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .mcard{flex-direction:column}.mcard-img-wrap{width:100%;height:170px}
+  .mcard-body{min-height:auto}
+  .nl-form{flex-direction:column}.nl-form input,.nl-form button{padding:12px 16px}
+  .ft-grid{grid-template-columns:1fr;gap:26px}
+  .ft-bottom{flex-direction:column;text-align:center}
+  .sec-header{flex-direction:column;align-items:flex-start}
+  .about-stats{gap:20px}
+  .hero-srch button{padding:14px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ══════════════════════════════════════ -->
+<header id="hdr">
+<div class="wrap">
+<div class="hdr-inner">
+  <a href="index.html" class="logo">
+    <span class="logo-name"><img style="height: 86px; width: auto;" src="img/logo.png"></span>
+    
+  </a>
+  <nav class="hdr-nav">
+    <a href="index.html" class="on">Home</a>
+    <a href="index.html#about">About Us</a>
+    <a href="index.html#featured">Scholarships</a>
+    <a href="posters.html">Posters</a>
+    <a href="college-majors.html">College Majors</a>
+    <a href="school-profiles.html">School Profiles</a>
+    <a href="index.html#newsletter">Newsletter</a>
+  </nav>
+  <div class="hdr-srch">
+    <div class="hdr-srch-box">
+      <input type="text" placeholder="Search scholarships…"/>
+      <button><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg> Search</button>
+    </div>
+  </div>
+  <button class="burger" onclick="openDrw()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</div>
+</header>
+
+<!-- drawer -->
+<div class="drw-bg" id="drwBg" onclick="closeDrwBg(event)">
+<div class="drw">
+  <div class="drw-top">
+    <a href="index.html" class="logo"><span class="logo-name" style="font-size:16px">Student<span>Scholarships</span></span></a>
+    <span class="drw-close" onclick="closeDrw()">✕</span>
+  </div>
+  <nav class="drw-nav">
+    <a href="index.html" onclick="closeDrw()">Home Page</a>
+    <a href="index.html#about" onclick="closeDrw()">About Us</a>
+    <a href="index.html#featured" onclick="closeDrw()">Scholarships</a>
+    <a href="posters.html" onclick="closeDrw()">Posters</a>
+    <a href="college-majors.html" onclick="closeDrw()">College Majors</a>
+    <a href="school-profiles.html" onclick="closeDrw()">School Profiles</a>
+    <a href="index.html#newsletter" onclick="closeDrw()">Newsletter</a>
+  </nav>
+  <div class="drw-foot"><input type="text" placeholder="Search scholarships…"/></div>
+</div>
+</div>
+
+<!-- ═══ HERO ════════════════════════════════════════ -->
+<section class="hero">
+  <img class="hero-bg" src="img/hero-bg.png" alt="Students studying"/>
+  <div class="hero-veil"></div>
+  <div class="wrap">
+    <div class="hero-content">
+      <p class="hero-ey">StudentScholarships.org &nbsp;·&nbsp; Est. 2003</p>
+      <h1>FIND<br/><em>SCHOLARSHIP</em></h1>
+
+<div class="hero-btn-wrap">
+   <a href="#featured" class="hero-btn primary-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        SCHOLARSHIP SEARCH
+   </a>
+   <a href="#managed" class="hero-btn secondary-btn">
+        <i class="fa-solid fa-user-graduate"></i>
+        SCHOLARSHIP MATCH
+   </a>
+   <a href="#newsletter" class="hero-btn outline-btn">
+        <i class="fa-solid fa-envelope-open-text"></i>
+        NEWSLETTER SIGN UP
+   </a>
+</div>
+
+
+
+      <!-- <p class="hero-sub">Search the largest vetted Scholarship Database on the Web.</p>
+      <div class="hero-srch">
+        <input type="text" placeholder="Search by keyword, major, or award name…"/>
+        <button><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg> Search</button>
+      </div>
+      <div class="hero-pills">
+        <a href="#featured" class="h-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Scholarship Match</a>
+        <a href="#newsletter" class="h-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter Sign-Up</a>
+        <a href="#winners" class="h-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>Recent Winners</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n">23K+</span><span class="hstat-l">Scholarships</span></div>
+    <div class="hstat"><span class="hstat-n">$2B+</span><span class="hstat-l">Award Value</span></div>
+    <div class="hstat"><span class="hstat-n">100%</span><span class="hstat-l">Free to Use</span></div>
+  </div> -->
+
+     </div>
+  </div>
+</section>
+
+<!--sidebar-->
+<div class="container">
+   <aside class="sidebar">
+      <h2>Contents</h2>
+         <ul>
+            <li><a href="#featured"><span class="arrow"><i class="fa-solid fa-book-open-reader"></i></span> Scholarships</a></li>
+            <li><a href="#newsletter"><span class="arrow"><i class="fa-regular fa-newspaper"></i></span> Newsletter</a></li>
+            <li><a href="#managed"><span class="arrow"><i class="fa-solid fa-handshake"></i></span> Scholarship Match</a></li>
+            <li><a href="#managed"><span class="arrow"><i class="fa-solid fa-certificate"></i></span> Managed Awards</a></li>
+            <li><a href="#winners"><span class="arrow"><i class="fa-solid fa-award"></i></span> Recent Winner's</a></li>
+         </ul>
+   </aside>
+
+   <main class="main-content">
+      <h1>Scholarships & More</h1>
+            
+      <p>StudentScholarships.org has been providing scholarship information to students and scholarship management services to organizations since 2001.</p>
+            
+      <p>Our scholarship database is considered the largest and most comprehensive source for finding scholarships online and is 100% free for the public to use.</p>
+           
+   <div class="contents-grid">
+      <a href="#featured" class="c-item">
+         <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+         </div>
+         <span class="c-label">View Scholarships</span>
+      </a>
+
+
+
+      <a href="#newsletter" class="c-item">
+         <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+         </div>
+         <span class="c-label">Scholarship Newsletter</span>
+      </a>
+
+
+
+      <a href="#managed" class="c-item">
+         <div class="c-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 11l3 3L22 4"/></svg>
+         </div>
+         <span class="c-label">Scholarship Match</span>
+      </a>
+     </div>
+   </main>
+   </div>
+   <hr>
+<!--sidebar-->
+
+<!--CONTENTS / QUICK LINKS-->
+<!-- <div class="contents-band">
+<div class="wrap" style="padding-inline:0">
+<div class="contents-grid">
+
+  <a href="#featured" class="c-item">
+    <div class="c-icon">
+      <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+    </div>
+    <span class="c-label">View Scholarships</span>
+  </a>
+  <a href="#newsletter" class="c-item">
+    <div class="c-icon">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </div>
+    <span class="c-label">Scholarship Newsletter</span>
+  </a>
+  <a href="#" class="c-item">
+   <div class="c-icon">
+   <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 11l3 3L22 4"/></svg>
+   </div>
+   <span class="c-label">Scholarship Match</span>
+  </a>
+  <a href="#managed" class="c-item">
+    <div class="c-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+    </div>
+    <span class="c-label">Managed Awards</span>
+  </a>
+  <a href="#winners" class="c-item">
+    <div class="c-icon">
+      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    </div>
+    <span class="c-label">Recent Winner's</span>
+  </a>
+</div>
+</div>
+</div> -->
+
+<!-- ═══ ACTION STRIP ═════════════════════════════════ -->
+<!-- <div class="strip">
+<div class="wrap">
+<div class="strip-grid">
+  <a href="#featured" class="s-item">
+    <div class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+    <div><p class="s-title">Scholarship Search</p><p class="s-desc">Browse thousands of vetted awards</p></div>
+  </a>
+  <a href="#" class="s-item">
+    <div class="s-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <div><p class="s-title">Scholarship Match</p><p class="s-desc">Find awards tailored to your profile</p></div>
+  </a>
+  <a href="#newsletter" class="s-item">
+    <div class="s-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+    <div><p class="s-title">Newsletter Sign-Up</p><p class="s-desc">New scholarships in your inbox</p></div>
+  </a>
+</div>
+</div>
+</div> -->
+
+<!-- ═══ ABOUT ════════════════════════════════════════ -->
+<section class="about" id="about">
+<div class="wrap">
+<div class="about-grid">
+  <div class="mosaic reveal">
+    <img class="mosaic-main" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=85&auto=format&fit=crop" alt="University library"/>
+    <img class="mosaic-acc" src="img/about.png" alt="Student studying"/>
+    <span class="mosaic-tag">Since 2003</span>
+  </div>
+  <div class="about-body reveal">
+    <span class="eyebrow">Scholarships &amp; More</span>
+    <h2 class="sec-h">The Nation's Largest Free Scholarship Database</h2>
+    <p>StudentScholarships.org has been providing scholarship information to students and scholarship management services to organisations since 2003.</p>
+    <p>Our database is considered the largest and most comprehensive source for finding scholarships online — 100% free for the public to use, always.</p>
+    <div class="about-stats">
+      <div><span class="astat-n">23K+</span><span class="astat-l">Scholarships Listed</span></div>
+      <div><span class="astat-n">$2B+</span><span class="astat-l">Total Award Value</span></div>
+      <div><span class="astat-n">20+</span><span class="astat-l">Years of Service</span></div>
+    </div>
+    <div class="about-links">
+      <a href="#featured" class="txt-link">View Scholarships</a>
+      <a href="#newsletter" class="txt-link">Scholarship Newsletter</a>
+      <a href="#" class="txt-link">Scholarship Match</a>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- ═══ FEATURED SCHOLARSHIPS ════════════════════════ -->
+<section class="featured" id="featured">
+<div class="wrap">
+  <div class="sec-header">
+    <div><span class="eyebrow">Currently Accepting Applications</span><h2 class="sec-h" style="margin-bottom:0">Featured Scholarships</h2></div>
+    <a href="#" class="txt-link">View All Scholarships</a>
+  </div>
+  <div class="card-grid">
+    <div class="scard reveal">
+      <div class="scard-img-wrap">
+        <img class="scard-img" src="img/Physical therapy.png" alt="Physical therapy"/>
+        <span class="scard-cat">Health Sciences</span>
+      </div>
+      <div class="scard-body">
+        <h3 class="scard-title">Summitt Physical Therapy Scholarship</h3>
+        <div class="scard-meta"><span>Value: <strong>$500</strong></span><span>Awards: <strong>1</strong></span></div>
+        <p class="scard-dl"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Deadline: Aug 31, 2026</p>
+        <p class="scard-desc">An excellent opportunity for students to write about a topic that is practical, relatable, and easy to understand. Physical therapy plays an important role in helping people maintain health and quality of life.</p>
+        <a href="application.html" class="scard-btn">Apply Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      
+    </div>
+    <div class="scard reveal">
+      <div class="scard-img-wrap">
+        <img class="scard-img" src="img/Creative Arts.png" alt="Creative writing"/>
+        <span class="scard-cat">Creative Arts</span>
+      </div>
+      <div class="scard-body">
+        <h3 class="scard-title">10 Words or Less Scholarship</h3>
+        <div class="scard-meta"><span>Value: <strong>$1,500</strong></span><span>Awards: <strong>2</strong></span></div>
+        <p class="scard-dl"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Deadline: Nov 15, 2026</p>
+        <p class="scard-desc">A fun opportunity to show off creativity in just a few words. Celebrates clever thinking, big ideas, and the power of saying something memorable without saying too much.</p>
+        <a href="application.html" class="scard-btn">Apply Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+    <div class="scard reveal">
+      <div class="scard-img-wrap">
+        <img class="scard-img" src="img/Science lab.png" alt="Science lab"/>
+        <span class="scard-cat">STEM</span>
+      </div>
+      <div class="scard-body">
+        <h3 class="scard-title">Future STEM Leaders Award</h3>
+        <div class="scard-meta"><span>Value: <strong>$2,000</strong></span><span>Awards: <strong>3</strong></span></div>
+        <p class="scard-dl"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Deadline: Oct 1, 2026</p>
+        <p class="scard-desc">Awarded to outstanding undergraduates in science, technology, engineering, or mathematics who demonstrate academic excellence and a commitment to innovation.</p>
+        <a href="application.html" class="scard-btn">Apply Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+    <div class="scard reveal">
+      <div class="scard-img-wrap">
+        <img class="scard-img" src="img/Community Service.png" alt="Community service"/>
+        <span class="scard-cat">Community Service</span>
+      </div>
+      <div class="scard-body">
+        <h3 class="scard-title">Community Impact Scholarship</h3>
+        <div class="scard-meta"><span>Value: <strong>$1,000</strong></span><span>Awards: <strong>4</strong></span></div>
+        <p class="scard-dl"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Deadline: Dec 1, 2026</p>
+        <p class="scard-desc">Recognising students who have made a meaningful difference through volunteering, civic engagement, or non-profit leadership alongside strong academic results.</p>
+        <a href="application.html" class="scard-btn">Apply Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ WINNERS ══════════════════════════════════════ -->
+<section class="winners" id="winners">
+  <img class="winners-bg" src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1800&q=85&auto=format&fit=crop" alt="Graduation ceremony"/>
+  <div class="winners-veil"></div>
+  <div class="wrap">
+    <div class="sec-header" style="margin-bottom:36px">
+      <div><span class="eyebrow">Past Recipients</span><h2 class="sec-h light" style="margin-bottom:0">Scholarship Winner's</h2></div>
+      <a href="#" class="txt-link light">View All Winners</a>
+    </div>
+    <div class="w-grid">
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Kimaya Mathews"/></div><p class="wcard-name">Kimaya Mathews</p><p class="wcard-sch">STEM Leaders Award</p><p class="wcard-yr">2025</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Sandy Valencia"/></div><p class="wcard-name">Sandy Valencia</p><p class="wcard-sch">10 Words or Less</p><p class="wcard-yr">2024</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Arielle Torres"/></div><p class="wcard-name">Arielle Torres</p><p class="wcard-sch">Community Impact</p><p class="wcard-yr">2024</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Paige Garrison"/></div><p class="wcard-name">Paige Garrison</p><p class="wcard-sch">Summitt PT Scholarship</p><p class="wcard-yr">2023</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Nathan Peralta"/></div><p class="wcard-name">Nathan Peralta</p><p class="wcard-sch">10 Words or Less</p><p class="wcard-yr">2023</p></div>
+    </div>
+    <div class="w-grid" style="margin-top:20px">
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Maya Chen"/></div><p class="wcard-name">Maya Chen</p><p class="wcard-sch">STEM Leaders Award</p><p class="wcard-yr">2023</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Lucia Morales"/></div><p class="wcard-name">Lucia Morales</p><p class="wcard-sch">Community Impact</p><p class="wcard-yr">2022</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1548142813-c348350df52b?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="James Rivera"/></div><p class="wcard-name">James Rivera</p><p class="wcard-sch">Summitt PT Scholarship</p><p class="wcard-yr">2022</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Elijah Brooks"/></div><p class="wcard-name">Elijah Brooks</p><p class="wcard-sch">10 Words or Less</p><p class="wcard-yr">2022</p></div>
+      <div class="wcard reveal"><div class="wcard-ring"><img class="wcard-img" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=300&q=80&auto=format&fit=crop&crop=faces,top" alt="Priya Sharma"/></div><p class="wcard-name">Priya Sharma</p><p class="wcard-sch">STEM Leaders Award</p><p class="wcard-yr">2021</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MANAGED ══════════════════════════════════════ -->
+<section class="managed" id="managed">
+<div class="wrap">
+  <div class="sec-header">
+    <div><span class="eyebrow">Administered By Us</span><h2 class="sec-h" style="margin-bottom:0">Managed Scholarships</h2></div>
+    <a href="#" class="txt-link">View All Managed Awards</a>
+  </div>
+  <div class="m-grid">
+    <div class="mcard reveal">
+      <div class="mcard-img-wrap"><img class="mcard-img" src="img/Less Scholarship.png" alt="Writing"/></div>
+      <div class="mcard-body"><h3 class="mcard-title">10 Words or Less Scholarship</h3><div class="mcard-meta"><span>Value: <strong>$1,500</strong></span><span>Awards: <strong>2</strong></span></div><p class="mcard-dl">Deadline: Nov 15, 2026</p><p class="mcard-desc">Show off your creativity in just a few words. Celebrates clever thinking, big ideas, and the power of memorable brevity.</p><a href="#" class="mcard-btn">Apply Now</a></div>
+    </div>
+    <div class="mcard reveal">
+      <div class="mcard-img-wrap"><img class="mcard-img" src="img/Physical Therapy 2.png" alt="Physical therapy 2"/></div>
+      <div class="mcard-body"><h3 class="mcard-title">Summitt Physical Therapy Scholarship</h3><div class="mcard-meta"><span>Value: <strong>$500</strong></span><span>Awards: <strong>1</strong></span></div><p class="mcard-dl">Deadline: Aug 31, 2026</p><p class="mcard-desc">Write about a practical, relatable topic in the healthcare and rehabilitation field to apply for this award.</p><a href="#" class="mcard-btn">Apply Now</a></div>
+    </div>
+    <div class="mcard reveal">
+      <div class="mcard-img-wrap"><img class="mcard-img" src="img/Leaders Award.png" alt="STEM"/></div>
+      <div class="mcard-body"><h3 class="mcard-title">Future STEM Leaders Award</h3><div class="mcard-meta"><span>Value: <strong>$2,000</strong></span><span>Awards: <strong>3</strong></span></div><p class="mcard-dl">Deadline: Oct 1, 2026</p><p class="mcard-desc">For outstanding STEM undergraduates demonstrating academic excellence and proven commitment to community and innovation.</p><a href="#" class="mcard-btn">Apply Now</a></div>
+    </div>
+    <div class="mcard reveal">
+      <div class="mcard-img-wrap"><img class="mcard-img" src="img/Impact Scholarship.png" alt="Community"/></div>
+      <div class="mcard-body"><h3 class="mcard-title">Community Impact Scholarship</h3><div class="mcard-meta"><span>Value: <strong>$1,000</strong></span><span>Awards: <strong>4</strong></span></div><p class="mcard-dl">Deadline: Dec 1, 2026</p><p class="mcard-desc">Honouring students who have made a meaningful difference through volunteering, civic engagement, or non-profit leadership.</p><a href="#" class="mcard-btn">Apply Now</a></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ NEWSLETTER ════════════════════════════════════ -->
+<section class="nl" id="newsletter">
+  <img class="nl-bg" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1800&q=85&auto=format&fit=crop" alt="Students"/>
+  <div class="nl-veil"></div>
+  <div class="wrap">
+    <div class="nl-inner">
+      <div class="reveal">
+        <span class="eyebrow">Stay in the Know</span>
+        <h2 class="sec-h">Get New Scholarships<br/>Delivered to You</h2>
+        <p>Subscribe free and receive curated scholarship opportunities in your inbox every week. Never miss an application deadline again.</p>
+        <form class="nl-form" onsubmit="return false">
+          <input type="email" placeholder="Your email address…"/>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-note">🔒 No spam. Unsubscribe anytime.</p>
+      </div>
+      <div class="reveal">
+        <img class="nl-img" src="img/Students collaborating.png" alt="Students collaborating"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+<div class="wrap">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <a href="index.html" class="logo"><span class="logo-name"><img style="height: 86px; width: auto;" src="img/Footer logo.png"></a>
+      <p>Providing free scholarship information to students since 2003. The largest, most comprehensive, and 100% vetted scholarship database on the web.</p>
+    </div>
+    <div><p class="ft-col-t">Scholarships</p><ul class="ft-links"><li><a href="#featured">Scholarship Search</a></li><li><a href="#">Scholarship Match</a></li><li><a href="#managed">Managed Awards</a></li><li><a href="#winners">Recent Winners</a></li></ul></div>
+    <div><p class="ft-col-t">Explore</p><ul class="ft-links"><li><a href="college-majors.html">College Majors</a></li><li><a href="school-profiles.html">School Profiles</a></li><li><a href="posters.html">Posters</a></li><li><a href="#newsletter">Newsletter</a></li></ul></div>
+    <div><p class="ft-col-t">Company</p><ul class="ft-links"><li><a href="#about">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+  </div>
+  <div class="ft-bottom"><span>© 2026 StudentScholarships.org — All rights reserved.</span><span>The largest vetted scholarship database on the web. Dev. By Joy</span></div>
+</div>
+</footer>
+
+<script>
+const hdr=document.getElementById('hdr');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
+function openDrw(){document.getElementById('drwBg').classList.add('open');document.body.style.overflow='hidden'}
+function closeDrw(){document.getElementById('drwBg').classList.remove('open');document.body.style.overflow=''}
+function closeDrwBg(e){if(e.target===document.getElementById('drwBg'))closeDrw()}
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const s=[...e.target.parentElement.querySelectorAll('.reveal')];const i=s.indexOf(e.target);setTimeout(()=>e.target.classList.add('vis'),i*75);ro.unobserve(e.target)}}),{threshold:.07,rootMargin:'0px 0px -24px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
