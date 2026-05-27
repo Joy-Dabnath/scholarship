@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>School Profiles — StudentScholarships.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#1b2d4f;--navy-deep:#0d1b2e;--gold:#b8923a;--gold-lt:#d4a94e;--gold-pale:#f7edd8;--cream:#faf7f2;--off:#f2ede4;--white:#fff;--slate:#3d4f68;--slate-lt:#6b7d95;--border:#ddd5c4;--green:#15803d;--red:#b91c1c;--ff-serif:'Playfair Display',Georgia,serif;--ff-sans:'DM Sans',system-ui,sans-serif;--pad:clamp(48px,6vw,80px);--wrap:1200px;--r:4px;--sh1:0 1px 4px rgba(13,27,46,.06),0 4px 16px rgba(13,27,46,.08);--sh2:0 4px 20px rgba(13,27,46,.10),0 12px 40px rgba(13,27,46,.14);--sh3:0 8px 32px rgba(13,27,46,.14),0 24px 64px rgba(13,27,46,.20)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{font-family:var(--ff-sans);background:var(--cream);color:var(--navy-deep);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}img{display:block;max-width:100%}button{cursor:pointer;border:none;background:none;font:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px,3.5vw,48px)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}.eyebrow::before{content:'';width:24px;height:1.5px;background:var(--gold);display:block;flex-shrink:0}
+.sec-h{font-family:var(--ff-serif);font-size:clamp(24px,3.4vw,40px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:18px}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}.reveal.vis{opacity:1;transform:none}
+
+/* HEADER */
+#hdr{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(13,27,46,.06);transition:box-shadow .3s}
+#hdr.scrolled{box-shadow:0 3px 20px rgba(13,27,46,.13)}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+.logo{display:flex;flex-direction:column;flex-shrink:0;line-height:1.15;text-decoration:none}
+.logo-name{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.2px}.logo-name span{color:var(--gold)}
+.logo-sub{font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-lt)}
+.hdr-nav{display:flex;align-items:center;flex:1;justify-content:center;gap:1px}
+.hdr-nav a{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);padding:5px 10px;border-radius:3px;white-space:nowrap;transition:color .15s,background .15s}
+.hdr-nav a:hover,.hdr-nav a.on{color:var(--navy);background:var(--gold-pale)}
+.hdr-srch-box{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--cream);transition:border-color .2s}
+.hdr-srch-box:focus-within{border-color:var(--navy)}
+.hdr-srch-box input{padding:6px 12px;font-family:var(--ff-sans);font-size:12px;background:transparent;border:none;outline:none;color:var(--navy-deep);width:140px}
+.hdr-srch-box button{padding:6px 12px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;transition:background .18s;display:flex;align-items:center}
+.hdr-srch-box button:hover{background:var(--gold)}
+.burger{display:none;flex-direction:column;gap:4px;padding:5px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:1px}
+.drw-bg{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}.drw-bg.open{display:block}
+.drw{position:absolute;right:0;top:0;bottom:0;width:280px;background:#fff;display:flex;flex-direction:column;animation:slideR .22s ease;overflow-y:auto}
+@keyframes slideR{from{transform:translateX(100%)}to{transform:none}}
+.drw-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drw-close{font-size:20px;color:var(--slate);cursor:pointer}
+.drw-nav a{display:block;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);padding:13px 20px;border-bottom:1px solid var(--off);transition:background .15s}
+.drw-nav a:hover{background:var(--gold-pale)}
+.drw-foot{padding:16px 20px;border-top:1px solid var(--border);margin-top:auto}
+.drw-foot input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--ff-sans);font-size:13px;background:var(--cream);outline:none}
+footer{background:var(--navy-deep);padding:56px 0 24px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.ft-brand .logo-name{color:#fff;font-size:18px}.ft-brand .logo-name span{color:var(--gold)}.ft-brand .logo-sub{color:rgba(255,255,255,.32)}
+.ft-brand p{margin-top:14px;font-size:13px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.75}
+.ft-col-t{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.42);font-weight:300;transition:color .18s}.ft-links a:hover{color:#fff}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:11px;color:rgba(255,255,255,.25);flex-wrap:wrap;gap:8px}
+
+/* PAGE HERO */
+.pg-hero{position:relative;height:clamp(240px,36vh,360px);display:flex;align-items:center;overflow:hidden}
+.pg-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.pg-hero-veil{position:absolute;inset:0;background:linear-gradient(110deg,rgba(10,20,42,.88) 0%,rgba(10,20,42,.60) 60%,rgba(10,20,42,.28) 100%)}
+.pg-hero-content{position:relative;z-index:1;animation:fUp .7s ease both}
+@keyframes fUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.pg-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.pg-eyebrow::before{content:'';width:20px;height:1.5px;background:var(--gold-lt);display:block}
+.pg-hero h1{font-family:var(--ff-serif);font-size:clamp(28px,4.5vw,50px);font-weight:700;color:#fff;line-height:1.12;margin-bottom:10px}
+.pg-hero p{font-size:15px;color:rgba(255,255,255,.72);font-weight:300;max-width:480px}
+
+.breadcrumb{background:#fff;border-bottom:1px solid var(--border);padding:12px 0}
+.bc-inner{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--slate-lt)}
+.bc-inner a{color:var(--navy);font-weight:600;transition:color .15s}.bc-inner a:hover{color:var(--gold)}
+
+/* SEARCH + FILTERS */
+.school-search-sec{background:#fff;padding:28px 0;border-bottom:1px solid var(--border)}
+.ss-inner{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ss-box{display:flex;flex:1;min-width:260px;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--cream);transition:border-color .2s}
+.ss-box:focus-within{border-color:var(--navy)}
+.ss-box input{flex:1;padding:11px 16px;font-family:var(--ff-sans);font-size:14px;border:none;outline:none;background:transparent}
+.ss-box button{padding:0 20px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .18s;white-space:nowrap}
+.ss-box button:hover{background:var(--gold)}
+.ss-select{padding:10px 16px;border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--ff-sans);font-size:13px;background:var(--cream);color:var(--navy);outline:none;cursor:pointer;transition:border-color .18s}
+.ss-select:focus{border-color:var(--navy)}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.f-btn{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap}
+.f-btn.active,.f-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* FEATURED SCHOOL */
+.feat-school{display:grid;grid-template-columns:1fr 1.1fr;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh2);margin-bottom:36px;background:#fff}
+.fs-img{width:100%;height:300px;object-fit:cover}
+.fs-body{padding:32px 36px;display:flex;flex-direction:column;justify-content:center}
+.fs-type{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1.5px solid var(--gold);padding:4px 10px;border-radius:2px;margin-bottom:12px}
+.fs-name{font-family:var(--ff-serif);font-size:26px;font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:6px}
+.fs-loc{font-size:12.5px;color:var(--slate-lt);font-weight:500;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.fs-loc svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.fs-desc{font-size:14px;color:var(--slate);line-height:1.76;font-weight:300;margin-bottom:20px}
+.fs-stats{display:flex;gap:24px;margin-bottom:22px;flex-wrap:wrap}
+.fs-stat{text-align:center}
+.fs-stat-n{font-family:var(--ff-serif);font-size:22px;font-weight:700;color:var(--navy);display:block;line-height:1}
+.fs-stat-l{font-size:9.5px;font-weight:500;color:var(--slate-lt);letter-spacing:.04em;margin-top:3px;display:block}
+.btn-navy{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--navy);padding:11px 22px;border-radius:var(--r);transition:background .18s;width:fit-content}
+.btn-navy:hover{background:var(--gold)}
+.btn-navy svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* SCHOOL GRID */
+.page-content{padding:var(--pad) 0;background:var(--cream)}
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+.txt-link{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);border-bottom:1.5px solid var(--gold);padding-bottom:2px;transition:color .18s;white-space:nowrap}
+.txt-link:hover{color:var(--gold)}
+.school-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.sc-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh1);transition:box-shadow .26s,transform .26s;display:flex;flex-direction:column}
+.sc-card:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+.sc-img-wrap{height:180px;overflow:hidden;position:relative}
+.sc-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.sc-card:hover .sc-img{transform:scale(1.06)}
+.sc-type-badge{position:absolute;top:12px;left:12px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:2px;color:#fff}
+.public{background:#1d4ed8}.private{background:var(--navy)}.community{background:#6d28d9}.liberal{background:var(--green)}
+.sc-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+.sc-name{font-family:var(--ff-serif);font-size:16px;font-weight:700;color:var(--navy);margin-bottom:5px;line-height:1.3}
+.sc-loc{font-size:11.5px;color:var(--slate-lt);font-weight:500;margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.sc-loc svg{width:11px;height:11px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.sc-stats{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--off);border-bottom:1px solid var(--off);margin-bottom:14px;flex-wrap:wrap}
+.sc-stat-item{font-size:11px;font-weight:500;color:var(--slate-lt)}
+.sc-stat-item strong{color:var(--navy);font-weight:700;display:block;font-size:13px;font-family:var(--ff-serif)}
+.sc-sch-count{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:14px}
+.sc-btn{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#fff;background:var(--navy);padding:9px 16px;border-radius:var(--r);align-self:flex-start;transition:background .18s;margin-top:auto}
+.sc-btn:hover{background:var(--gold)}
+.sc-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* RESPONSIVE */
+@media(max-width:940px){
+  .hdr-nav,.hdr-srch-box{display:none}.burger{display:flex}
+  .school-grid{grid-template-columns:repeat(2,1fr)}
+  .feat-school{grid-template-columns:1fr}.fs-img{height:220px}.fs-body{padding:22px 24px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:580px){
+  .school-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr;gap:26px}
+  .ft-bottom{flex-direction:column;text-align:center}
+  .ss-inner{flex-direction:column;align-items:stretch}
+  .ss-select{width:100%}
+  .sec-header{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+<div class="wrap"><div class="hdr-inner">
+  <a href="index.html" class="logo">
+    <span class="logo-name"><img style="height: 86px; width: auto;" src="img/logo.png"></span>
+    
+  </a>
+  <nav class="hdr-nav">
+    <a href="index.html">Home Page</a>
+    <a href="index.html#about">About Us</a>
+    <a href="index.html#featured">Scholarships</a>
+    <a href="posters.html">Posters</a>
+    <a href="college-majors.html">College Majors</a>
+    <a href="school-profiles.html" class="on">School Profiles</a>
+    <a href="index.html#newsletter">Newsletter</a>
+  </nav>
+  <div class="hdr-srch-box">
+    <input type="text" placeholder="Search schools…"/>
+    <button><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
+  </div>
+  <button class="burger" onclick="openDrw()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div></div>
+</header>
+
+<div class="drw-bg" id="drwBg" onclick="closeDrwBg(event)">
+<div class="drw">
+  <div class="drw-top"><a href="index.html" class="logo"><span class="logo-name" style="font-size:16px">Student<span>Scholarships</span></span></a><span class="drw-close" onclick="closeDrw()">✕</span></div>
+  <nav class="drw-nav">
+    <a href="index.html" onclick="closeDrw()">Home Page</a>
+    <a href="index.html#about" onclick="closeDrw()">About Us</a>
+    <a href="index.html#featured" onclick="closeDrw()">Scholarships</a>
+    <a href="posters.html" onclick="closeDrw()">Posters</a>
+    <a href="college-majors.html" onclick="closeDrw()">College Majors</a>
+    <a href="school-profiles.html" onclick="closeDrw()">School Profiles</a>
+    <a href="index.html#newsletter" onclick="closeDrw()">Newsletter</a>
+  </nav>
+  <div class="drw-foot"><input type="text" placeholder="Search schools…"/></div>
+</div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="pg-hero">
+  <img class="pg-hero-bg" src="https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=88&auto=format&fit=crop" alt="University campus aerial"/>
+  <div class="pg-hero-veil"></div>
+  <div class="wrap">
+    <div class="pg-hero-content">
+      <p class="pg-eyebrow">StudentScholarships.org</p>
+      <h1>School Profiles</h1>
+      <p>Browse detailed profiles of colleges and universities across the country. Discover scholarships tied to specific institutions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb"><div class="wrap"><div class="bc-inner">
+  <a href="index.html">Home</a><span style="color:var(--border)">›</span><span>School Profiles</span>
+</div></div></div>
+
+<!-- SEARCH + FILTERS -->
+<div class="school-search-sec">
+<div class="wrap">
+  <div class="ss-inner">
+    <div class="ss-box">
+      <input type="text" placeholder="Search by school name, city, or state…"/>
+      <button>Search</button>
+    </div>
+    <select class="ss-select"><option>All States</option><option>California</option><option>New York</option><option>Texas</option><option>Florida</option><option>Illinois</option><option>Massachusetts</option><option>Pennsylvania</option><option>Ohio</option></select>
+    <select class="ss-select"><option>All Types</option><option>Public University</option><option>Private University</option><option>Liberal Arts College</option><option>Community College</option><option>Technical College</option></select>
+  </div>
+  <div class="filter-row">
+    <span style="font-size:10px;font-weight:700;color:var(--slate-lt);letter-spacing:.08em;text-transform:uppercase;align-self:center;margin-right:4px">Sort:</span>
+    <button class="f-btn active">Most Scholarships</button>
+    <button class="f-btn">Highest Award Value</button>
+    <button class="f-btn">Alphabetical</button>
+    <button class="f-btn">Acceptance Rate</button>
+  </div>
+</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<section class="page-content">
+<div class="wrap">
+
+  <!-- Featured school -->
+  <div class="feat-school reveal">
+    <img class="fs-img" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=85&auto=format&fit=crop" alt="Harvard library"/>
+    <div class="fs-body">
+      <span class="fs-type">⭐ Featured School</span>
+      <h2 class="fs-name">Massachusetts Institute of Technology</h2>
+      <p class="fs-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Cambridge, Massachusetts · Public Research University</p>
+      <p class="fs-desc">One of the world's leading research universities, MIT offers extensive financial aid and scholarship programmes for undergraduate and graduate students across all disciplines. Over 70% of students receive some form of financial assistance.</p>
+      <div class="fs-stats">
+        <div class="fs-stat"><span class="fs-stat-n">11,520</span><span class="fs-stat-l">Students Enrolled</span></div>
+        <div class="fs-stat"><span class="fs-stat-n">4%</span><span class="fs-stat-l">Acceptance Rate</span></div>
+        <div class="fs-stat"><span class="fs-stat-n">340+</span><span class="fs-stat-l">Scholarships Available</span></div>
+        <div class="fs-stat"><span class="fs-stat-n">$74K</span><span class="fs-stat-l">Avg Aid Package</span></div>
+      </div>
+      <a href="#" class="btn-navy">View School Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+
+  <div class="sec-header">
+    <div><span class="eyebrow">United States Colleges &amp; Universities</span><h2 class="sec-h" style="margin-bottom:0">School Profiles</h2></div>
+    <a href="#" class="txt-link">View All Schools</a>
+  </div>
+
+  <div class="school-grid">
+
+    <div class="sc-card reveal">
+      <div class="sc-img-wrap">
+        <img class="sc-img" src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=600&q=82&auto=format&fit=crop" alt="Stanford"/>
+        <span class="sc-type-badge private">Private</span>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">Stanford University</h3>
+        <p class="sc-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Palo Alto, California</p>
+        <div class="sc-stats">
+          <div class="sc-stat-item"><strong>17,249</strong>Students</div>
+          <div class="sc-stat-item"><strong>4%</strong>Acceptance</div>
+          <div class="sc-stat-item"><strong>$67K</strong>Avg Aid</div>
+        </div>
+        <p class="sc-sch-count">🎓 286 Scholarships Available</p>
+        <a href="#" class="sc-btn">View Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sc-card reveal">
+      <div class="sc-img-wrap">
+        <img class="sc-img" src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=82&auto=format&fit=crop" alt="UCLA"/>
+        <span class="sc-type-badge public">Public</span>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">University of California, Los Angeles</h3>
+        <p class="sc-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Los Angeles, California</p>
+        <div class="sc-stats">
+          <div class="sc-stat-item"><strong>46,430</strong>Students</div>
+          <div class="sc-stat-item"><strong>9%</strong>Acceptance</div>
+          <div class="sc-stat-item"><strong>$24K</strong>Avg Aid</div>
+        </div>
+        <p class="sc-sch-count">🎓 412 Scholarships Available</p>
+        <a href="#" class="sc-btn">View Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sc-card reveal">
+      <div class="sc-img-wrap">
+        <img class="sc-img" src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=82&auto=format&fit=crop" alt="NYU"/>
+        <span class="sc-type-badge private">Private</span>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">New York University</h3>
+        <p class="sc-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>New York, New York</p>
+        <div class="sc-stats">
+          <div class="sc-stat-item"><strong>59,144</strong>Students</div>
+          <div class="sc-stat-item"><strong>12%</strong>Acceptance</div>
+          <div class="sc-stat-item"><strong>$42K</strong>Avg Aid</div>
+        </div>
+        <p class="sc-sch-count">🎓 358 Scholarships Available</p>
+        <a href="#" class="sc-btn">View Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sc-card reveal">
+      <div class="sc-img-wrap">
+        <img class="sc-img" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=82&auto=format&fit=crop" alt="University of Michigan"/>
+        <span class="sc-type-badge public">Public</span>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">University of Michigan</h3>
+        <p class="sc-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Ann Arbor, Michigan</p>
+        <div class="sc-stats">
+          <div class="sc-stat-item"><strong>47,907</strong>Students</div>
+          <div class="sc-stat-item"><strong>18%</strong>Acceptance</div>
+          <div class="sc-stat-item"><strong>$19K</strong>Avg Aid</div>
+        </div>
+        <p class="sc-sch-count">🎓 524 Scholarships Available</p>
+        <a href="#" class="sc-btn">View Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sc-card reveal">
+      <div class="sc-img-wrap">
+        <img class="sc-img" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=82&auto=format&fit=crop" alt="Emory University"/>
+        <span class="sc-type-badge private">Private</span>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">Emory University</h3>
+        <p class="sc-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Atlanta, Georgia</p>
+        <div class="sc-stats">
+          <div class="sc-stat-item"><strong>14,769</strong>Students</div>
+          <div class="sc-stat-item"><strong>11%</strong>Acceptance</div>
+          <div class="sc-stat-item"><strong>$55K</strong>Avg Aid</div>
+        </div>
+        <p class="sc-sch-count">🎓 198 Scholarships Available</p>
+        <a href="#" class="sc-btn">View Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sc-card reveal">
+      <div class="sc-img-wrap">
+        <img class="sc-img" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=82&auto=format&fit=crop" alt="University of Texas"/>
+        <span class="sc-type-badge public">Public</span>
+      </div>
+      <div class="sc-body">
+        <h3 class="sc-name">University of Texas at Austin</h3>
+        <p class="sc-loc"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Austin, Texas</p>
+        <div class="sc-stats">
+          <div class="sc-stat-item"><strong>51,832</strong>Students</div>
+          <div class="sc-stat-item"><strong>29%</strong>Acceptance</div>
+          <div class="sc-stat-item"><strong>$14K</strong>Avg Aid</div>
+        </div>
+        <p class="sc-sch-count">🎓 476 Scholarships Available</p>
+        <a href="#" class="sc-btn">View Profile <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+  </div><!-- /school-grid -->
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="wrap">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <a href="index.html" class="logo"><span class="logo-name"><img style="height: 86px; width: auto;" src="img/Footer logo.png"></span></a>
+      <p>Providing free scholarship information to students since 2003. The largest, most comprehensive, and 100% vetted scholarship database on the web.</p>
+    </div>
+    <div><p class="ft-col-t">Scholarships</p><ul class="ft-links"><li><a href="index.html#featured">Scholarship Search</a></li><li><a href="#">Scholarship Match</a></li><li><a href="index.html#managed">Managed Awards</a></li><li><a href="index.html#winners">Recent Winners</a></li></ul></div>
+    <div><p class="ft-col-t">Explore</p><ul class="ft-links"><li><a href="college-majors.html">College Majors</a></li><li><a href="school-profiles.html">School Profiles</a></li><li><a href="posters.html">Posters</a></li><li><a href="index.html#newsletter">Newsletter</a></li></ul></div>
+    <div><p class="ft-col-t">Company</p><ul class="ft-links"><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+  </div>
+  <div class="ft-bottom"><span>© 2026 StudentScholarships.org — All rights reserved.</span><span>The largest vetted scholarship database on the web. Dev. By Joy</span></div>
+</div>
+</footer>
+
+<script>
+const hdr=document.getElementById('hdr');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
+function openDrw(){document.getElementById('drwBg').classList.add('open');document.body.style.overflow='hidden'}
+function closeDrw(){document.getElementById('drwBg').classList.remove('open');document.body.style.overflow=''}
+function closeDrwBg(e){if(e.target===document.getElementById('drwBg'))closeDrw()}
+document.querySelectorAll('.f-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')})});
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const s=[...e.target.parentElement.querySelectorAll('.reveal')];const i=s.indexOf(e.target);setTimeout(()=>e.target.classList.add('vis'),i*70);ro.unobserve(e.target)}}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

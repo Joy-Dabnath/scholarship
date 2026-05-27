@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Posters — StudentScholarships.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#1b2d4f;--navy-deep:#0d1b2e;--gold:#b8923a;--gold-lt:#d4a94e;--gold-pale:#f7edd8;--cream:#faf7f2;--off:#f2ede4;--white:#fff;--slate:#3d4f68;--slate-lt:#6b7d95;--border:#ddd5c4;--red:#b91c1c;--ff-serif:'Playfair Display',Georgia,serif;--ff-sans:'DM Sans',system-ui,sans-serif;--pad:clamp(48px,6vw,80px);--wrap:1200px;--r:4px;--sh1:0 1px 4px rgba(13,27,46,.06),0 4px 16px rgba(13,27,46,.08);--sh2:0 4px 20px rgba(13,27,46,.10),0 12px 40px rgba(13,27,46,.14);--sh3:0 8px 32px rgba(13,27,46,.14),0 24px 64px rgba(13,27,46,.20)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{font-family:var(--ff-sans);background:var(--cream);color:var(--navy-deep);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}img{display:block;max-width:100%}button{cursor:pointer;border:none;background:none;font:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px,3.5vw,48px)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}.eyebrow::before{content:'';width:24px;height:1.5px;background:var(--gold);display:block;flex-shrink:0}
+.sec-h{font-family:var(--ff-serif);font-size:clamp(24px,3.4vw,40px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:18px}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}.reveal.vis{opacity:1;transform:none}
+
+/* HEADER */
+#hdr{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(13,27,46,.06);transition:box-shadow .3s}
+#hdr.scrolled{box-shadow:0 3px 20px rgba(13,27,46,.13)}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+.logo{display:flex;flex-direction:column;flex-shrink:0;line-height:1.15;text-decoration:none}
+.logo-name{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.2px}.logo-name span{color:var(--gold)}
+.logo-sub{font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-lt)}
+.hdr-nav{display:flex;align-items:center;flex:1;justify-content:center;gap:1px}
+.hdr-nav a{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);padding:5px 10px;border-radius:3px;white-space:nowrap;transition:color .15s,background .15s}
+.hdr-nav a:hover,.hdr-nav a.on{color:var(--navy);background:var(--gold-pale)}
+.hdr-srch-box{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--cream);transition:border-color .2s}
+.hdr-srch-box:focus-within{border-color:var(--navy)}
+.hdr-srch-box input{padding:6px 12px;font-family:var(--ff-sans);font-size:12px;background:transparent;border:none;outline:none;color:var(--navy-deep);width:140px}
+.hdr-srch-box button{padding:6px 12px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:background .18s;display:flex;align-items:center;gap:4px}
+.hdr-srch-box button:hover{background:var(--gold)}
+.burger{display:none;flex-direction:column;gap:4px;padding:5px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:1px}
+/* DRAWER */
+.drw-bg{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}.drw-bg.open{display:block}
+.drw{position:absolute;right:0;top:0;bottom:0;width:280px;background:#fff;display:flex;flex-direction:column;animation:slideR .22s ease;overflow-y:auto}
+@keyframes slideR{from{transform:translateX(100%)}to{transform:none}}
+.drw-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drw-close{font-size:20px;color:var(--slate);cursor:pointer;padding:3px}
+.drw-nav a{display:block;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);padding:13px 20px;border-bottom:1px solid var(--off);transition:background .15s}
+.drw-nav a:hover{background:var(--gold-pale)}
+.drw-foot{padding:16px 20px;border-top:1px solid var(--border);margin-top:auto}
+.drw-foot input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--ff-sans);font-size:13px;background:var(--cream);outline:none}
+
+/* PAGE HERO BANNER */
+.pg-hero{position:relative;height:clamp(240px,36vh,360px);display:flex;align-items:center;overflow:hidden}
+.pg-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.pg-hero-veil{position:absolute;inset:0;background:linear-gradient(110deg,rgba(10,20,42,.88) 0%,rgba(10,20,42,.60) 60%,rgba(10,20,42,.30) 100%)}
+.pg-hero-content{position:relative;z-index:1;animation:fUp .7s ease both}
+@keyframes fUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.pg-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.pg-eyebrow::before{content:'';width:20px;height:1.5px;background:var(--gold-lt);display:block}
+.pg-hero h1{font-family:var(--ff-serif);font-size:clamp(28px,4.5vw,50px);font-weight:700;color:#fff;line-height:1.12;margin-bottom:10px}
+.pg-hero p{font-size:15px;color:rgba(255,255,255,.72);font-weight:300;max-width:480px}
+
+/* BREADCRUMB */
+.breadcrumb{background:#fff;border-bottom:1px solid var(--border);padding:12px 0}
+.bc-inner{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--slate-lt)}
+.bc-inner a{color:var(--navy);font-weight:600;transition:color .15s}.bc-inner a:hover{color:var(--gold)}
+.bc-sep{color:var(--border)}
+
+/* FILTER BAR */
+.filter-bar{background:#fff;border-bottom:1px solid var(--border);padding:18px 0}
+.filter-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-btn{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:transparent;transition:all .18s;cursor:pointer;white-space:nowrap}
+.filter-btn.active,.filter-btn:hover{color:var(--white);background:var(--navy);border-color:var(--navy)}
+
+/* CONTENT */
+.page-content{padding:var(--pad) 0;background:var(--cream)}
+
+/* POSTER GRID */
+.poster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.poster-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh1);transition:box-shadow .26s,transform .26s;display:flex;flex-direction:column}
+.poster-card:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+.poster-img-wrap{position:relative;overflow:hidden}
+.poster-img-wrap img{width:100%;height:220px;object-fit:cover;transition:transform .5s ease}
+.poster-card:hover .poster-img-wrap img{transform:scale(1.05)}
+.poster-badge{position:absolute;top:12px;left:12px;background:var(--navy);color:#fff;font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:4px 9px;border-radius:2px}
+.poster-body{padding:20px 22px 22px;flex:1;display:flex;flex-direction:column}
+.poster-title{font-family:var(--ff-serif);font-size:16.5px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.poster-desc{font-size:13px;color:var(--slate);line-height:1.68;font-weight:300;flex:1;margin-bottom:18px}
+.poster-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.poster-meta{font-size:10.5px;color:var(--slate-lt);font-weight:500}
+.poster-dl-btn{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--navy);padding:9px 16px;border-radius:var(--r);transition:background .18s}
+.poster-dl-btn:hover{background:var(--gold)}
+.poster-dl-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* FEATURED POSTER (full-width banner card) */
+.featured-poster{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh2);margin-bottom:36px;background:#fff}
+.fp-img{height:320px;width:100%;object-fit:cover}
+.fp-body{padding:36px 40px;display:flex;flex-direction:column;justify-content:center}
+.fp-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1.5px solid var(--gold);padding:4px 10px;border-radius:2px;margin-bottom:14px;align-self:flex-start}
+.fp-title{font-family:var(--ff-serif);font-size:26px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:14px}
+.fp-desc{font-size:14.5px;color:var(--slate);line-height:1.78;font-weight:300;margin-bottom:24px}
+.fp-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-navy{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--navy);padding:11px 22px;border-radius:var(--r);transition:background .18s}
+.btn-navy:hover{background:var(--gold)}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);border:1.5px solid var(--navy);padding:10px 20px;border-radius:var(--r);transition:all .18s}
+.btn-ghost:hover{background:var(--gold-pale);border-color:var(--gold)}
+.btn-navy svg,.btn-ghost svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* FOOTER */
+footer{background:var(--navy-deep);padding:56px 0 24px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.ft-brand .logo-name{color:#fff;font-size:18px}.ft-brand .logo-name span{color:var(--gold)}.ft-brand .logo-sub{color:rgba(255,255,255,.32)}
+.ft-brand p{margin-top:14px;font-size:13px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.75}
+.ft-col-t{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.42);font-weight:300;transition:color .18s}.ft-links a:hover{color:#fff}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:11px;color:rgba(255,255,255,.25);flex-wrap:wrap;gap:8px}
+
+/* RESPONSIVE */
+@media(max-width:940px){
+  .hdr-nav,.hdr-srch-box{display:none}.burger{display:flex}
+  .poster-grid{grid-template-columns:repeat(2,1fr)}
+  .featured-poster{grid-template-columns:1fr}
+  .fp-img{height:240px}.fp-body{padding:24px 26px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:580px){
+  .poster-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr;gap:26px}
+  .ft-bottom{flex-direction:column;text-align:center}
+  .filter-inner{gap:7px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+<div class="wrap"><div class="hdr-inner">
+  <a href="index.html" class="logo">
+    <span class="logo-name"><img style="height: 86px; width: auto;" src="img/logo.png"></span>
+    
+  </a>
+  <nav class="hdr-nav">
+    <a href="index.html">Home Page</a>
+    <a href="index.html#about">About Us</a>
+    <a href="index.html#featured">Scholarships</a>
+    <a href="posters.html" class="on">Posters</a>
+    <a href="college-majors.html">College Majors</a>
+    <a href="school-profiles.html">School Profiles</a>
+    <a href="index.html#newsletter">Newsletter</a>
+  </nav>
+  <div class="hdr-srch-box">
+    <input type="text" placeholder="Search posters…"/>
+    <button><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
+  </div>
+  <button class="burger" onclick="openDrw()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div></div>
+</header>
+
+<div class="drw-bg" id="drwBg" onclick="closeDrwBg(event)">
+<div class="drw">
+  <div class="drw-top"><a href="index.html" class="logo"><span class="logo-name" style="font-size:16px">Student<span>Scholarships</span></span></a><span class="drw-close" onclick="closeDrw()">✕</span></div>
+  <nav class="drw-nav">
+    <a href="index.html" onclick="closeDrw()">Home Page</a>
+    <a href="index.html#about" onclick="closeDrw()">About Us</a>
+    <a href="index.html#featured" onclick="closeDrw()">Scholarships</a>
+    <a href="posters.html" onclick="closeDrw()">Posters</a>
+    <a href="college-majors.html" onclick="closeDrw()">College Majors</a>
+    <a href="school-profiles.html" onclick="closeDrw()">School Profiles</a>
+    <a href="index.html#newsletter" onclick="closeDrw()">Newsletter</a>
+  </nav>
+  <div class="drw-foot"><input type="text" placeholder="Search posters…"/></div>
+</div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="pg-hero">
+  <img class="pg-hero-bg" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=88&auto=format&fit=crop" alt="Academic poster display"/>
+  <div class="pg-hero-veil"></div>
+  <div class="wrap">
+    <div class="pg-hero-content">
+      <p class="pg-eyebrow">StudentScholarships.org</p>
+      <h1>Academic Posters</h1>
+      <p>Download and share high-quality scholarship posters for your school, library, or community centre — always free.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb"><div class="wrap"><div class="bc-inner">
+  <a href="index.html">Home</a>
+  <span class="bc-sep">›</span>
+  <span>Posters</span>
+</div></div></div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar"><div class="wrap"><div class="filter-inner">
+  <span style="font-size:10.5px;font-weight:700;color:var(--slate-lt);letter-spacing:.08em;text-transform:uppercase;margin-right:6px">Filter:</span>
+  <button class="filter-btn active">All Posters</button>
+  <button class="filter-btn">Science &amp; Research</button>
+  <button class="filter-btn">Arts &amp; Humanities</button>
+  <button class="filter-btn">Business</button>
+  <button class="filter-btn">Health &amp; Medicine</button>
+  <button class="filter-btn">Technology</button>
+  <button class="filter-btn">Community</button>
+</div></div></div>
+
+<!-- MAIN CONTENT -->
+<section class="page-content">
+<div class="wrap">
+
+  <!-- Featured Poster -->
+  <div class="featured-poster reveal">
+    <img class="fp-img" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=85&auto=format&fit=crop" alt="Education scholarship poster"/>
+    <div class="fp-body">
+      <span class="fp-badge">⭐ Featured Poster</span>
+      <h2 class="fp-title">2026 Scholarship Awareness Campaign Poster</h2>
+      <p class="fp-desc">Our flagship annual scholarship awareness poster — perfect for notice boards, classrooms, and community spaces. Available in standard and retina resolution. Encourages students to explore the thousands of free scholarships available to them.</p>
+      <div class="fp-actions">
+        <a href="#" class="btn-navy"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download HD</a>
+        <a href="#" class="btn-ghost"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Preview</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Poster Grid -->
+  <div class="poster-grid">
+
+    <div class="poster-card reveal">
+      <div class="poster-img-wrap">
+        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=82&auto=format&fit=crop" alt="STEM poster"/>
+        <span class="poster-badge">Science &amp; Research</span>
+      </div>
+      <div class="poster-body">
+        <h3 class="poster-title">STEM Scholarship Opportunities 2026</h3>
+        <p class="poster-desc">A comprehensive poster listing top STEM scholarships available to high school and undergraduate students. Ideal for science classroom walls and library displays.</p>
+        <div class="poster-footer">
+          <span class="poster-meta">PDF · 24" × 36" · 300 DPI</span>
+          <a href="#" class="poster-dl-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-card reveal">
+      <div class="poster-img-wrap">
+        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=82&auto=format&fit=crop" alt="Arts poster"/>
+        <span class="poster-badge">Arts &amp; Humanities</span>
+      </div>
+      <div class="poster-body">
+        <h3 class="poster-title">Creative Arts Scholarships Guide</h3>
+        <p class="poster-desc">Showcasing the best scholarships available to students pursuing fine arts, creative writing, music, and the performing arts. Bold and colourful design.</p>
+        <div class="poster-footer">
+          <span class="poster-meta">PDF · 18" × 24" · 300 DPI</span>
+          <a href="#" class="poster-dl-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-card reveal">
+      <div class="poster-img-wrap">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=82&auto=format&fit=crop" alt="Health poster"/>
+        <span class="poster-badge">Health &amp; Medicine</span>
+      </div>
+      <div class="poster-body">
+        <h3 class="poster-title">Healthcare &amp; Medical Scholarships</h3>
+        <p class="poster-desc">A targeted poster for nursing, pre-med, and health science students. Includes QR code linking directly to the scholarship database for easy access.</p>
+        <div class="poster-footer">
+          <span class="poster-meta">PDF · 24" × 36" · 300 DPI</span>
+          <a href="#" class="poster-dl-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-card reveal">
+      <div class="poster-img-wrap">
+        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=82&auto=format&fit=crop" alt="Business poster"/>
+        <span class="poster-badge">Business</span>
+      </div>
+      <div class="poster-body">
+        <h3 class="poster-title">Business &amp; Finance Scholarship Directory</h3>
+        <p class="poster-desc">Ideal for college counselling offices. Lists leading business school scholarships, fellowships, and award programmes for undergraduate and graduate students.</p>
+        <div class="poster-footer">
+          <span class="poster-meta">PDF · 18" × 24" · 300 DPI</span>
+          <a href="#" class="poster-dl-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-card reveal">
+      <div class="poster-img-wrap">
+        <img src="img/Community poster.png" alt="Community poster"/>
+        <span class="poster-badge">Community</span>
+      </div>
+      <div class="poster-body">
+        <h3 class="poster-title">Community Service Scholarship Poster</h3>
+        <p class="poster-desc">Highlights scholarships for students who have demonstrated outstanding commitment to community service, volunteerism, and civic leadership.</p>
+        <div class="poster-footer">
+          <span class="poster-meta">PDF · 24" × 36" · 300 DPI</span>
+          <a href="#" class="poster-dl-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="poster-card reveal">
+      <div class="poster-img-wrap">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=82&auto=format&fit=crop" alt="Technology poster"/>
+        <span class="poster-badge">Technology</span>
+      </div>
+      <div class="poster-body">
+        <h3 class="poster-title">Technology &amp; Innovation Awards</h3>
+        <p class="poster-desc">Covers scholarships for computer science, AI, cybersecurity, and emerging technology students. Modern design suitable for tech lab and hackathon events.</p>
+        <div class="poster-footer">
+          <span class="poster-meta">PDF · 18" × 24" · 300 DPI</span>
+          <a href="#" class="poster-dl-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /poster-grid -->
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="wrap">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <a href="index.html" class="logo"><span class="logo-name"><img style="height: 86px; width: auto;" src="img/Footer logo.png"></span></a>
+      <p>Providing free scholarship information to students since 2003. The largest, most comprehensive, and 100% vetted scholarship database on the web. </p>
+    </div>
+    <div><p class="ft-col-t">Scholarships</p><ul class="ft-links"><li><a href="index.html#featured">Scholarship Search</a></li><li><a href="#">Scholarship Match</a></li><li><a href="index.html#managed">Managed Awards</a></li><li><a href="index.html#winners">Recent Winners</a></li></ul></div>
+    <div><p class="ft-col-t">Explore</p><ul class="ft-links"><li><a href="college-majors.html">College Majors</a></li><li><a href="school-profiles.html">School Profiles</a></li><li><a href="posters.html">Posters</a></li><li><a href="index.html#newsletter">Newsletter</a></li></ul></div>
+    <div><p class="ft-col-t">Company</p><ul class="ft-links"><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+  </div>
+  <div class="ft-bottom"><span>© 2026 StudentScholarships.org — All rights reserved.</span><span>The largest vetted scholarship database on the web. Dev. By Joy</span></div>
+</div>
+</footer>
+
+<script>
+const hdr=document.getElementById('hdr');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
+function openDrw(){document.getElementById('drwBg').classList.add('open');document.body.style.overflow='hidden'}
+function closeDrw(){document.getElementById('drwBg').classList.remove('open');document.body.style.overflow=''}
+function closeDrwBg(e){if(e.target===document.getElementById('drwBg'))closeDrw()}
+// filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')})});
+// reveal
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const s=[...e.target.parentElement.querySelectorAll('.reveal')];const i=s.indexOf(e.target);setTimeout(()=>e.target.classList.add('vis'),i*75);ro.unobserve(e.target)}}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>

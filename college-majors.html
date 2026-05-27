@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>College Majors — StudentScholarships.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#1b2d4f;--navy-deep:#0d1b2e;--gold:#b8923a;--gold-lt:#d4a94e;--gold-pale:#f7edd8;--cream:#faf7f2;--off:#f2ede4;--white:#fff;--slate:#3d4f68;--slate-lt:#6b7d95;--border:#ddd5c4;--red:#b91c1c;--ff-serif:'Playfair Display',Georgia,serif;--ff-sans:'DM Sans',system-ui,sans-serif;--pad:clamp(48px,6vw,80px);--wrap:1200px;--r:4px;--sh1:0 1px 4px rgba(13,27,46,.06),0 4px 16px rgba(13,27,46,.08);--sh2:0 4px 20px rgba(13,27,46,.10),0 12px 40px rgba(13,27,46,.14);--sh3:0 8px 32px rgba(13,27,46,.14),0 24px 64px rgba(13,27,46,.20)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{font-family:var(--ff-sans);background:var(--cream);color:var(--navy-deep);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}img{display:block;max-width:100%}button{cursor:pointer;border:none;background:none;font:inherit}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px,3.5vw,48px)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}.eyebrow::before{content:'';width:24px;height:1.5px;background:var(--gold);display:block;flex-shrink:0}
+.sec-h{font-family:var(--ff-serif);font-size:clamp(24px,3.4vw,40px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:18px}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}.reveal.vis{opacity:1;transform:none}
+
+/* SHARED HEADER / DRAWER / FOOTER — identical structure */
+#hdr{position:sticky;top:0;z-index:200;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(13,27,46,.06);transition:box-shadow .3s}
+#hdr.scrolled{box-shadow:0 3px 20px rgba(13,27,46,.13)}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+.logo{display:flex;flex-direction:column;flex-shrink:0;line-height:1.15;text-decoration:none}
+.logo-name{font-family:var(--ff-serif);font-size:17px;font-weight:700;color:var(--navy);letter-spacing:-.2px}.logo-name span{color:var(--gold)}
+.logo-sub{font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-lt)}
+.hdr-nav{display:flex;align-items:center;flex:1;justify-content:center;gap:1px}
+.hdr-nav a{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);padding:5px 10px;border-radius:3px;white-space:nowrap;transition:color .15s,background .15s}
+.hdr-nav a:hover,.hdr-nav a.on{color:var(--navy);background:var(--gold-pale)}
+.hdr-srch-box{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--cream);transition:border-color .2s}
+.hdr-srch-box:focus-within{border-color:var(--navy)}
+.hdr-srch-box input{padding:6px 12px;font-family:var(--ff-sans);font-size:12px;background:transparent;border:none;outline:none;color:var(--navy-deep);width:140px}
+.hdr-srch-box button{padding:6px 12px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;transition:background .18s;display:flex;align-items:center}
+.hdr-srch-box button:hover{background:var(--gold)}
+.burger{display:none;flex-direction:column;gap:4px;padding:5px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:1px}
+.drw-bg{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}.drw-bg.open{display:block}
+.drw{position:absolute;right:0;top:0;bottom:0;width:280px;background:#fff;display:flex;flex-direction:column;animation:slideR .22s ease;overflow-y:auto}
+@keyframes slideR{from{transform:translateX(100%)}to{transform:none}}
+.drw-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drw-close{font-size:20px;color:var(--slate);cursor:pointer;padding:3px}
+.drw-nav a{display:block;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);padding:13px 20px;border-bottom:1px solid var(--off);transition:background .15s}
+.drw-nav a:hover{background:var(--gold-pale)}
+.drw-foot{padding:16px 20px;border-top:1px solid var(--border);margin-top:auto}
+.drw-foot input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r);font-family:var(--ff-sans);font-size:13px;background:var(--cream);outline:none}
+footer{background:var(--navy-deep);padding:56px 0 24px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.ft-brand .logo-name{color:#fff;font-size:18px}.ft-brand .logo-name span{color:var(--gold)}.ft-brand .logo-sub{color:rgba(255,255,255,.32)}
+.ft-brand p{margin-top:14px;font-size:13px;color:rgba(255,255,255,.42);font-weight:300;line-height:1.75}
+.ft-col-t{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:16px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.42);font-weight:300;transition:color .18s}.ft-links a:hover{color:#fff}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:11px;color:rgba(255,255,255,.25);flex-wrap:wrap;gap:8px}
+
+/* PAGE HERO */
+.pg-hero{position:relative;height:clamp(240px,36vh,360px);display:flex;align-items:center;overflow:hidden}
+.pg-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.pg-hero-veil{position:absolute;inset:0;background:linear-gradient(110deg,rgba(10,20,42,.88) 0%,rgba(10,20,42,.60) 60%,rgba(10,20,42,.28) 100%)}
+.pg-hero-content{position:relative;z-index:1;animation:fUp .7s ease both}
+@keyframes fUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.pg-eyebrow{font-size:9.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.pg-eyebrow::before{content:'';width:20px;height:1.5px;background:var(--gold-lt);display:block}
+.pg-hero h1{font-family:var(--ff-serif);font-size:clamp(28px,4.5vw,50px);font-weight:700;color:#fff;line-height:1.12;margin-bottom:10px}
+.pg-hero p{font-size:15px;color:rgba(255,255,255,.72);font-weight:300;max-width:480px}
+
+.breadcrumb{background:#fff;border-bottom:1px solid var(--border);padding:12px 0}
+.bc-inner{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--slate-lt)}
+.bc-inner a{color:var(--navy);font-weight:600;transition:color .15s}.bc-inner a:hover{color:var(--gold)}
+.bc-sep{color:var(--border)}
+
+/* SEARCH SECTION */
+.major-search-sec{background:#fff;padding:32px 0;border-bottom:1px solid var(--border)}
+.major-search-inner{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.major-search-box{display:flex;flex:1;min-width:240px;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--cream);transition:border-color .2s}
+.major-search-box:focus-within{border-color:var(--navy)}
+.major-search-box input{flex:1;padding:11px 16px;font-family:var(--ff-sans);font-size:14px;border:none;outline:none;background:transparent}
+.major-search-box button{padding:0 20px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .18s;white-space:nowrap}
+.major-search-box button:hover{background:var(--gold)}
+.search-tags{display:flex;gap:8px;flex-wrap:wrap}
+.s-tag{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap}
+.s-tag.active,.s-tag:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* MAJOR CARDS */
+.page-content{padding:var(--pad) 0;background:var(--cream)}
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+.txt-link{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);border-bottom:1.5px solid var(--gold);padding-bottom:2px;transition:color .18s;white-space:nowrap}
+.txt-link:hover{color:var(--gold)}
+.major-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:48px}
+.mj-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh1);transition:box-shadow .26s,transform .26s;text-decoration:none;display:flex;flex-direction:column}
+.mj-card:hover{box-shadow:var(--sh2);transform:translateY(-4px)}
+.mj-img-wrap{height:160px;overflow:hidden;position:relative}
+.mj-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.mj-card:hover .mj-img{transform:scale(1.07)}
+.mj-count{position:absolute;bottom:10px;right:10px;background:var(--navy);color:#fff;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:2px}
+.mj-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+.mj-cat{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.mj-title{font-family:var(--ff-serif);font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.25}
+.mj-desc{font-size:12.5px;color:var(--slate);line-height:1.65;font-weight:300;flex:1;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.mj-link{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:5px;align-self:flex-start;transition:color .15s}
+.mj-link:hover{color:var(--navy)}
+.mj-link svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* FEATURED MAJOR (wide card) */
+.featured-major{display:grid;grid-template-columns:1fr 1.2fr;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh2);margin-bottom:36px;background:#fff}
+.fm-img{height:280px;width:100%;object-fit:cover}
+.fm-body{padding:32px 36px;display:flex;flex-direction:column;justify-content:center}
+.fm-cat{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.fm-cat::before{content:'';width:18px;height:1.5px;background:var(--gold);display:block}
+.fm-title{font-family:var(--ff-serif);font-size:24px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:12px}
+.fm-desc{font-size:14px;color:var(--slate);line-height:1.78;font-weight:300;margin-bottom:22px}
+.fm-stats{display:flex;gap:28px;margin-bottom:22px;flex-wrap:wrap}
+.fm-stat-n{font-family:var(--ff-serif);font-size:26px;font-weight:700;color:var(--navy);display:block;line-height:1}
+.fm-stat-l{font-size:10px;font-weight:500;color:var(--slate-lt);letter-spacing:.04em;margin-top:3px;display:block}
+.btn-navy{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--navy);padding:11px 22px;border-radius:var(--r);transition:background .18s;width:fit-content}
+.btn-navy:hover{background:var(--gold)}
+.btn-navy svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* RESPONSIVE */
+@media(max-width:940px){
+  .hdr-nav,.hdr-srch-box{display:none}.burger{display:flex}
+  .major-grid{grid-template-columns:repeat(2,1fr)}
+  .featured-major{grid-template-columns:1fr}
+  .fm-img{height:220px}.fm-body{padding:22px 24px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:580px){
+  .major-grid{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr;gap:26px}
+  .ft-bottom{flex-direction:column;text-align:center}
+  .major-search-inner{flex-direction:column}
+  .major-search-box{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+<div class="wrap"><div class="hdr-inner">
+  <a href="index.html" class="logo">
+    <span class="logo-name"><img style="height: 86px; width: auto;" src="img/logo.png"></span>
+    
+  <nav class="hdr-nav">
+    <a href="index.html">Home Page</a>
+    <a href="index.html#about">About Us</a>
+    <a href="index.html#featured">Scholarships</a>
+    <a href="posters.html">Posters</a>
+    <a href="college-majors.html" class="on">College Majors</a>
+    <a href="school-profiles.html">School Profiles</a>
+    <a href="index.html#newsletter">Newsletter</a>
+  </nav>
+  <div class="hdr-srch-box">
+    <input type="text" placeholder="Search majors…"/>
+    <button><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
+  </div>
+  <button class="burger" onclick="openDrw()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div></div>
+</header>
+
+<div class="drw-bg" id="drwBg" onclick="closeDrwBg(event)">
+<div class="drw">
+  <div class="drw-top"><a href="index.html" class="logo"><span class="logo-name" style="font-size:16px">Student<span>Scholarships</span></span></a><span class="drw-close" onclick="closeDrw()">✕</span></div>
+  <nav class="drw-nav">
+    <a href="index.html" onclick="closeDrw()">Home Page</a>
+    <a href="index.html#about" onclick="closeDrw()">About Us</a>
+    <a href="index.html#featured" onclick="closeDrw()">Scholarships</a>
+    <a href="posters.html" onclick="closeDrw()">Posters</a>
+    <a href="college-majors.html" onclick="closeDrw()">College Majors</a>
+    <a href="school-profiles.html" onclick="closeDrw()">School Profiles</a>
+    <a href="index.html#newsletter" onclick="closeDrw()">Newsletter</a>
+  </nav>
+  <div class="drw-foot"><input type="text" placeholder="Search majors…"/></div>
+</div>
+</div>
+
+<!-- PAGE HERO -->
+<section class="pg-hero">
+  <img class="pg-hero-bg" src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=1600&q=88&auto=format&fit=crop" alt="University campus"/>
+  <div class="pg-hero-veil"></div>
+  <div class="wrap">
+    <div class="pg-hero-content">
+      <p class="pg-eyebrow">StudentScholarships.org</p>
+      <h1>College Majors</h1>
+      <p>Explore scholarships by field of study. Find awards perfectly matched to your academic pathway and career goals.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb"><div class="wrap"><div class="bc-inner">
+  <a href="index.html">Home</a><span class="bc-sep">›</span><span>College Majors</span>
+</div></div></div>
+
+<!-- SEARCH / FILTER -->
+<div class="major-search-sec">
+<div class="wrap">
+  <div class="major-search-inner">
+    <div class="major-search-box">
+      <input type="text" placeholder="Search by major name (e.g. Nursing, Computer Science, Business)…"/>
+      <button>Search</button>
+    </div>
+    <div class="search-tags">
+      <button class="s-tag active">All</button>
+      <button class="s-tag">STEM</button>
+      <button class="s-tag">Arts</button>
+      <button class="s-tag">Business</button>
+      <button class="s-tag">Health</button>
+      <button class="s-tag">Law</button>
+      <button class="s-tag">Education</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CONTENT -->
+<section class="page-content">
+<div class="wrap">
+
+  <!-- Featured major -->
+  <div class="featured-major reveal">
+    <img class="fm-img" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=900&q=85&auto=format&fit=crop" alt="Science lab"/>
+    <div class="fm-body">
+      <p class="fm-cat">Most Scholarships Available</p>
+      <h2 class="fm-title">Science, Technology, Engineering &amp; Mathematics</h2>
+      <p class="fm-desc">STEM majors have access to the largest number of scholarships in our database. From research fellowships to industry-sponsored awards, the opportunities are vast for students pursuing careers in science and technology.</p>
+      <div class="fm-stats">
+        <div><span class="fm-stat-n">4,200+</span><span class="fm-stat-l">Scholarships Available</span></div>
+        <div><span class="fm-stat-n">$180M+</span><span class="fm-stat-l">Total Award Value</span></div>
+      </div>
+      <a href="#" class="btn-navy">Browse STEM Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+
+  <div class="sec-header">
+    <div><span class="eyebrow">All Fields of Study</span><h2 class="sec-h" style="margin-bottom:0">Browse by Major</h2></div>
+    <a href="#" class="txt-link">View All Majors</a>
+  </div>
+
+  <div class="major-grid">
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&q=80&auto=format&fit=crop" alt="STEM"/>
+        <span class="mj-count">4,200+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">STEM</p>
+        <h3 class="mj-title">Science &amp; Mathematics</h3>
+        <p class="mj-desc">Physics, chemistry, biology, mathematics, and interdisciplinary science programmes. Strong industry sponsorships and research fellowship opportunities.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80&auto=format&fit=crop" alt="Engineering"/>
+        <span class="mj-count">3,800+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">STEM</p>
+        <h3 class="mj-title">Engineering &amp; Technology</h3>
+        <p class="mj-desc">Civil, mechanical, electrical, computer, and chemical engineering. Scholarships from top corporations, government agencies, and professional societies.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&q=80&auto=format&fit=crop" alt="Health"/>
+        <span class="mj-count">2,900+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">Health Sciences</p>
+        <h3 class="mj-title">Health &amp; Medicine</h3>
+        <p class="mj-desc">Nursing, pre-medicine, public health, physical therapy, pharmacy, and allied health professions. High-value awards from healthcare foundations.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=500&q=80&auto=format&fit=crop" alt="Business"/>
+        <span class="mj-count">2,400+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">Business</p>
+        <h3 class="mj-title">Business &amp; Economics</h3>
+        <p class="mj-desc">Finance, accounting, marketing, management, and entrepreneurship. Industry-sponsored awards and merit-based business school scholarships.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=500&q=80&auto=format&fit=crop" alt="Arts"/>
+        <span class="mj-count">1,800+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">Liberal Arts</p>
+        <h3 class="mj-title">Arts &amp; Humanities</h3>
+        <p class="mj-desc">Fine arts, design, creative writing, philosophy, history, and cultural studies. Foundation grants and arts council awards.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=500&q=80&auto=format&fit=crop" alt="Law"/>
+        <span class="mj-count">1,200+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">Law &amp; Policy</p>
+        <h3 class="mj-title">Law &amp; Political Science</h3>
+        <p class="mj-desc">Pre-law, political science, international relations, public policy, and criminal justice. Bar association awards and public interest fellowships.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&q=80&auto=format&fit=crop" alt="Education"/>
+        <span class="mj-count">1,600+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">Education</p>
+        <h3 class="mj-title">Education &amp; Teaching</h3>
+        <p class="mj-desc">Elementary, secondary, and special education teaching programmes. Government grants, teacher fellowships, and district-sponsored awards.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+    <a href="#" class="mj-card reveal">
+      <div class="mj-img-wrap">
+        <img class="mj-img" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&q=80&auto=format&fit=crop" alt="Social sciences"/>
+        <span class="mj-count">1,400+ Scholarships</span>
+      </div>
+      <div class="mj-body">
+        <p class="mj-cat">Social Sciences</p>
+        <h3 class="mj-title">Social Sciences &amp; Psychology</h3>
+        <p class="mj-desc">Psychology, sociology, social work, anthropology, and communication studies. Non-profit and government-funded awards for community-focused students.</p>
+        <span class="mj-link">Browse Scholarships <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="wrap">
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <a href="index.html" class="logo"><span class="logo-name"><img style="height: 86px; width: auto;" src="img/Footer logo.png"></span></a>
+      <p>Providing free scholarship information to students since 2003. The largest, most comprehensive, and 100% vetted scholarship database on the web.</p>
+    </div>
+    <div><p class="ft-col-t">Scholarships</p><ul class="ft-links"><li><a href="index.html#featured">Scholarship Search</a></li><li><a href="#">Scholarship Match</a></li><li><a href="index.html#managed">Managed Awards</a></li><li><a href="index.html#winners">Recent Winners</a></li></ul></div>
+    <div><p class="ft-col-t">Explore</p><ul class="ft-links"><li><a href="college-majors.html">College Majors</a></li><li><a href="school-profiles.html">School Profiles</a></li><li><a href="posters.html">Posters</a></li><li><a href="index.html#newsletter">Newsletter</a></li></ul></div>
+    <div><p class="ft-col-t">Company</p><ul class="ft-links"><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+  </div>
+  <div class="ft-bottom"><span>© 2026 StudentScholarships.org — All rights reserved.</span><span>The largest vetted scholarship database on the web. Dev. By Joy</span></div>
+</div>
+</footer>
+
+<script>
+const hdr=document.getElementById('hdr');
+window.addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
+function openDrw(){document.getElementById('drwBg').classList.add('open');document.body.style.overflow='hidden'}
+function closeDrw(){document.getElementById('drwBg').classList.remove('open');document.body.style.overflow=''}
+function closeDrwBg(e){if(e.target===document.getElementById('drwBg'))closeDrw()}
+document.querySelectorAll('.s-tag').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.s-tag').forEach(x=>x.classList.remove('active'));b.classList.add('active')})});
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const s=[...e.target.parentElement.querySelectorAll('.reveal')];const i=s.indexOf(e.target);setTimeout(()=>e.target.classList.add('vis'),i*70);ro.unobserve(e.target)}}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
